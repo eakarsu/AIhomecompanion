@@ -4,7 +4,28 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import FeaturePage from './pages/FeaturePage';
 import AIAssistant from './pages/AIAssistant';
+import AdvancedAITools from './pages/AdvancedAITools';
+import FamilyPermissions from './pages/FamilyPermissions';
 import Sidebar from './components/Sidebar';
+
+// === Batch 04 Gaps & Frontend Mounts ===
+import CfAgenticHouseholdOrchestratorAutonomou from './pages/CfAgenticHouseholdOrchestratorAutonomou';
+import CfRealTimeEnergyDemandShiftingAuto from './pages/CfRealTimeEnergyDemandShiftingAuto';
+import CfProactiveMaintenancePredictionFromAp from './pages/CfProactiveMaintenancePredictionFromAp';
+import CfVoiceVideoMultimodalAiUnderstanding from './pages/CfVoiceVideoMultimodalAiUnderstanding';
+import CfMultiHomeEnergyArbitrageWithDemand from './pages/CfMultiHomeEnergyArbitrageWithDemand';
+import CfFamilyActivityClusteringAutoCreating from './pages/CfFamilyActivityClusteringAutoCreating';
+import GapNoExpenseOptimizerForServiceCancell from './pages/GapNoExpenseOptimizerForServiceCancell';
+import GapNoOccupancyPredictionModel from './pages/GapNoOccupancyPredictionModel';
+import GapNoGuestProfilingAi from './pages/GapNoGuestProfilingAi';
+import GapNoEmergencyResponseCoordinationAi from './pages/GapNoEmergencyResponseCoordinationAi';
+import GapNoRoutineLearningNewAutomationSugge from './pages/GapNoRoutineLearningNewAutomationSugge';
+import GapNoDeviceMarketplaceIntegration from './pages/GapNoDeviceMarketplaceIntegration';
+import GapNoVendorServiceBooking from './pages/GapNoVendorServiceBooking';
+import GapNoMultiHomeManagement from './pages/GapNoMultiHomeManagement';
+import GapNoAuditLog0References from './pages/GapNoAuditLog0References';
+import GapNoWebhookSurface from './pages/GapNoWebhookSurface';
+import GapNoWebsocketRealTimeDeviceUpdates from './pages/GapNoWebsocketRealTimeDeviceUpdates';
 
 const API = 'http://localhost:3001/api';
 
@@ -339,7 +360,28 @@ function AppLayout() {
               {name:'ai_confidence',label:'AI Confidence',type:'number'},{name:'icon',label:'Icon'}
             ]} />} />
             <Route path="/ai" element={<AIAssistant />} />
-          </Routes>
+            <Route path="/advanced-ai" element={<AdvancedAITools />} />
+            <Route path="/family-permissions" element={<FamilyPermissions />} />
+          
+          {/* // === Batch 04 Gaps & Frontend Mounts === */}
+          <Route path="/cf-agentic-household-orchestrator-autonomou" element={<CfAgenticHouseholdOrchestratorAutonomou />} />
+          <Route path="/cf-real-time-energy-demand-shifting-auto" element={<CfRealTimeEnergyDemandShiftingAuto />} />
+          <Route path="/cf-proactive-maintenance-prediction-from-ap" element={<CfProactiveMaintenancePredictionFromAp />} />
+          <Route path="/cf-voice-video-multimodal-ai-understanding-" element={<CfVoiceVideoMultimodalAiUnderstanding />} />
+          <Route path="/cf-multi-home-energy-arbitrage-with-demand" element={<CfMultiHomeEnergyArbitrageWithDemand />} />
+          <Route path="/cf-family-activity-clustering-auto-creating" element={<CfFamilyActivityClusteringAutoCreating />} />
+          <Route path="/gap-no-expense-optimizer-for-service-cancell" element={<GapNoExpenseOptimizerForServiceCancell />} />
+          <Route path="/gap-no-occupancy-prediction-model" element={<GapNoOccupancyPredictionModel />} />
+          <Route path="/gap-no-guest-profiling-ai" element={<GapNoGuestProfilingAi />} />
+          <Route path="/gap-no-emergency-response-coordination-ai" element={<GapNoEmergencyResponseCoordinationAi />} />
+          <Route path="/gap-no-routine-learning-new-automation-sugge" element={<GapNoRoutineLearningNewAutomationSugge />} />
+          <Route path="/gap-no-device-marketplace-integration" element={<GapNoDeviceMarketplaceIntegration />} />
+          <Route path="/gap-no-vendor-service-booking" element={<GapNoVendorServiceBooking />} />
+          <Route path="/gap-no-multi-home-management" element={<GapNoMultiHomeManagement />} />
+          <Route path="/gap-no-audit-log-0-references" element={<GapNoAuditLog0References />} />
+          <Route path="/gap-no-webhook-surface" element={<GapNoWebhookSurface />} />
+          <Route path="/gap-no-websocket-real-time-device-updates" element={<GapNoWebsocketRealTimeDeviceUpdates />} />
+</Routes>
         </main>
       </div>
     </AppContext.Provider>

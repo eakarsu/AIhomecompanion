@@ -54,6 +54,7 @@ const navGroups = [
     { key: 'predictive', path: '/predictive', icon: '🔮', label: 'Predictive AI' },
     { key: 'recommendations', path: '/recommendations', icon: '💡', label: 'Recommendations' },
     { key: 'ai', path: '/ai', icon: '🤖', label: 'AI Assistant' },
+    { key: 'advanced-ai', path: '/advanced-ai', icon: '🧠', label: 'Advanced AI' },
   ]},
 ];
 
@@ -84,7 +85,28 @@ export default function Sidebar({ currentPage, setCurrentPage, onLogout }) {
             ))}
           </div>
         ))}
-      </nav>
+      
+        {/* // === Batch 04 Gaps & Frontend Mounts === */}
+        <div style={{ borderTop: '1px solid #eee', marginTop: '0.5rem', paddingTop: '0.5rem' }}>
+        <a href="/cf-agentic-household-orchestrator-autonomou" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>Agentic household orchestrator autonomou</a>
+        <a href="/cf-real-time-energy-demand-shifting-auto" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>Real-time energy demand shifting auto-mo</a>
+        <a href="/cf-proactive-maintenance-prediction-from-ap" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>Proactive maintenance prediction from ap</a>
+        <a href="/cf-voice-video-multimodal-ai-understanding-" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>Voice + video multimodal AI understandin</a>
+        <a href="/cf-multi-home-energy-arbitrage-with-demand" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>Multi-home energy arbitrage with demand-</a>
+        <a href="/cf-family-activity-clustering-auto-creating" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>Family activity clustering auto-creating</a>
+        <a href="/gap-no-expense-optimizer-for-service-cancell" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No expense-optimizer for service cancell</a>
+        <a href="/gap-no-occupancy-prediction-model" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No occupancy-prediction model</a>
+        <a href="/gap-no-guest-profiling-ai" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No guest profiling AI</a>
+        <a href="/gap-no-emergency-response-coordination-ai" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No emergency-response coordination AI</a>
+        <a href="/gap-no-routine-learning-new-automation-sugge" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No routine-learning new-automation sugge</a>
+        <a href="/gap-no-device-marketplace-integration" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No device marketplace integration</a>
+        <a href="/gap-no-vendor-service-booking" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No vendor service booking</a>
+        <a href="/gap-no-multi-home-management" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No multi-home management</a>
+        <a href="/gap-no-audit-log-0-references" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No audit log (0 references)</a>
+        <a href="/gap-no-webhook-surface" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No webhook surface</a>
+        <a href="/gap-no-websocket-real-time-device-updates" style={{ display: "block", padding: "0.4rem 0.6rem", fontSize: "0.85rem" }}>No WebSocket real-time device updates</a>
+        </div>
+</nav>
       <div className="sidebar-footer">
         <div style={{ fontSize: 12, color: '#94a3b8', marginBottom: 8, textAlign: 'center' }}>
           {user.name || 'User'} ({user.role || 'admin'})
