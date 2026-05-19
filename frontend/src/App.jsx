@@ -26,6 +26,7 @@ import GapNoMultiHomeManagement from './pages/GapNoMultiHomeManagement';
 import GapNoAuditLog0References from './pages/GapNoAuditLog0References';
 import GapNoWebhookSurface from './pages/GapNoWebhookSurface';
 import GapNoWebsocketRealTimeDeviceUpdates from './pages/GapNoWebsocketRealTimeDeviceUpdates';
+import CustomViewsPage from './pages/CustomViewsPage';
 
 const API = 'http://localhost:3001/api';
 
@@ -381,6 +382,7 @@ function AppLayout() {
           <Route path="/gap-no-audit-log-0-references" element={<GapNoAuditLog0References />} />
           <Route path="/gap-no-webhook-surface" element={<GapNoWebhookSurface />} />
           <Route path="/gap-no-websocket-real-time-device-updates" element={<GapNoWebsocketRealTimeDeviceUpdates />} />
+          <Route path="/custom-views" element={<CustomViewsPage />} />
 </Routes>
         </main>
       </div>

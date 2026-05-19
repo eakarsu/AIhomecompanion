@@ -90,4 +90,10 @@ app.use('/api/gap-no-audit-log-0-references', route_gap_no_audit_log_0_reference
 app.use('/api/gap-no-webhook-surface', route_gap_no_webhook_surface);
 app.use('/api/gap-no-websocket-real-time-device-updates', route_gap_no_websocket_real_time_device_updates);
 
+// === Custom Views (mount BEFORE 404) ===
+app.use('/api/custom-views', require('./routes/customViews'));
+
+// 404 handler
+app.use((req, res) => res.status(404).json({ error: 'Not found', path: req.path }));
+
 app.listen(PORT, () => console.log(`🚀 Backend running on port ${PORT}`));

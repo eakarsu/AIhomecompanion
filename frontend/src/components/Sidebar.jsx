@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const navGroups = [
   { group: 'Main', items: [
     { key: 'dashboard', path: '/', icon: '🏠', label: 'Dashboard' },
+    { key: 'custom-views', path: '/custom-views', icon: '🗂️', label: 'Home Views' },
   ]},
   { group: 'Smart Home', items: [
     { key: 'devices', path: '/devices', icon: '📱', label: 'Devices' },
