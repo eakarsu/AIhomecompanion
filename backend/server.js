@@ -73,6 +73,7 @@ app.use('/api/predictive', require('./routes/predictive'));
 app.use('/api/family-permissions', require('./routes/familyPermissions'));
 app.use('/api/energy-arbitrage', require('./routes/energyArbitrage'));
 app.use('/api/agentic-household', require('./routes/agenticHousehold'));
+app.use('/api/medication-reminder-escalation', require('./routes/medicationReminderEscalation'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 

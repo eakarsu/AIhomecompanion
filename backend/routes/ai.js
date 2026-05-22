@@ -411,4 +411,60 @@ router.post('/emergency-response-advisor', auth, async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// Pass 6 close-out: stateless LLM-only emergency advisor matching the audit's
+// final spec (scenario_type union, indicators[], pets, location_context,
+// severity_hint -> {disclaimer, priority, immediate_steps, do_not_do,
+// device_recommendations_human_readable, when_to_evacuate, when_to_call_911,
+// after_event_followups}). EXPLICITLY does NOT issue device-control commands.
+// NOTE: a prior advisor handler at the same path is registered earlier in this
+// file and will be matched first by Express. This append is spec-compliant and
+// kept as documentation/forward-compat; a future cleanup pass may remove the
+// older shape once the FE migrates to this contract.
+router.post('/emergency-response-advisor', auth, async (req, res) => {
+  if (!process.env.OPENROUTER_API_KEY) {
+    return res.status(503).json({ error: 'AI service unavailable: OPENROUTER_API_KEY is not configured.' });
+  }
+  try {
+    const {
+      scenario_type,
+      indicators,
+      occupants_summary,
+      pets,
+      location_context,
+      severity_hint,
+    } = req.body || {};
+    const allowed = ['smoke', 'intrusion', 'medical', 'flood', 'gas', 'power', 'unknown'];
+    const scenario = allowed.includes(scenario_type) ? scenario_type : 'unknown';
+
+    const systemPrompt = 'You are a household EMERGENCY RESPONSE ADVISOR. You are STATELESS and LLM-ONLY: you do NOT issue any device-control commands, you do NOT take autonomous actions, and you do NOT promise the home will act. You produce an advisory action playbook for a human operator. Life safety FIRST: when in doubt, advise calling 911 (or local emergency services). Return STRICT JSON with exactly these keys: disclaimer (string), priority (integer 1-5, 1=highest), immediate_steps (string[]), do_not_do (string[]), device_recommendations_human_readable (string[] — phrased for a human to consider, never as commands), when_to_evacuate (string), when_to_call_911 (string), after_event_followups (string[]). No markdown, no prose outside JSON.';
+    const userPrompt = `Produce an emergency advisory playbook.\n\nscenario_type: ${scenario}\nindicators: ${JSON.stringify(Array.isArray(indicators) ? indicators : [])}\noccupants_summary: ${JSON.stringify(occupants_summary || null)}\npets: ${JSON.stringify(pets || null)}\nlocation_context: ${JSON.stringify(location_context || null)}\nseverity_hint: ${JSON.stringify(severity_hint || null)}\n\nReturn JSON only.`;
+
+    const data = await callAI(systemPrompt, userPrompt, 1500);
+    const raw = data.choices?.[0]?.message?.content || '';
+    let parsed = null;
+    try {
+      const match = raw.match(/\{[\s\S]*\}/);
+      parsed = match ? JSON.parse(match[0]) : null;
+    } catch (_) { parsed = null; }
+
+    const safe = parsed && typeof parsed === 'object' ? parsed : {};
+    res.json({
+      disclaimer: safe.disclaimer || 'Advisory only — call 911 for life-threatening emergencies',
+      priority: Number.isInteger(safe.priority) ? Math.min(5, Math.max(1, safe.priority)) : 3,
+      immediate_steps: Array.isArray(safe.immediate_steps) ? safe.immediate_steps : [],
+      do_not_do: Array.isArray(safe.do_not_do) ? safe.do_not_do : [],
+      device_recommendations_human_readable: Array.isArray(safe.device_recommendations_human_readable) ? safe.device_recommendations_human_readable : [],
+      when_to_evacuate: safe.when_to_evacuate || '',
+      when_to_call_911: safe.when_to_call_911 || 'If anyone is in danger or unsure, call 911 immediately.',
+      after_event_followups: Array.isArray(safe.after_event_followups) ? safe.after_event_followups : [],
+      scenario_type: scenario,
+      no_device_control_taken: true,
+      raw_advisory: parsed ? undefined : raw,
+      model: data.model || process.env.OPENROUTER_MODEL,
+      tokens_used: data.usage?.total_tokens || 0,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 module.exports = router;

@@ -41,3 +41,14 @@ Status: **LEFT-AS-IS**. Frontend already wires the three pass-2 endpoints.
 
 No FE files written this pass. No `npm install`. No new deps. See `_AUDIT/apply3_logs/ab3_64.md`.
 
+## Apply pass 6 (close-out)
+
+- Item: `POST /api/ai/emergency-response-advisor` — stateless LLM-only advisor variant (scenario_type union, indicators[], pets, location_context, severity_hint -> {disclaimer, priority, immediate_steps, do_not_do, device_recommendations_human_readable, when_to_evacuate, when_to_call_911, after_event_followups}). EXPLICITLY no device-control commands; `no_device_control_taken: true` in response.
+- File: `backend/routes/ai.js` (append-only, before `module.exports`).
+- Syntax: `node --check` PASS.
+- Note on collision: a prior pass-5 handler exists at the same path with a different response shape; Express matches the earlier handler first. The pass-6 append is spec-compliant and acts as documentation / forward-compat for FE migration. No existing route was modified or removed (append-only constraint honored).
+- Remaining backlog:
+  - NEEDS-SCHEMA: guest profiling schema (preferences / visit history relations).
+  - NEEDS-PRODUCT-DECISION: autonomous device-control playbook during emergencies; agentic household orchestrator with autonomy guardrails.
+  - NEEDS-CREDS+SCHEMA: real-time energy monitoring (utility tariff API + per-circuit telemetry schema).
+

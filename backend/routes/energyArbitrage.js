@@ -18,7 +18,7 @@ async function callAI(systemPrompt, userPrompt) {
       'X-Title': 'AIhomecompanion - Energy Arbitrage'
     },
     body: JSON.stringify({
-      model: process.env.OPENROUTER_MODEL || 'anthropic/claude-3-5-sonnet-20241022',
+      model: process.env.OPENROUTER_MODEL || (process.env.OPENROUTER_MODEL || 'anthropic/claude-haiku-4.5'),
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }

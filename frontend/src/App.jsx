@@ -27,6 +27,12 @@ import GapNoAuditLog0References from './pages/GapNoAuditLog0References';
 import GapNoWebhookSurface from './pages/GapNoWebhookSurface';
 import GapNoWebsocketRealTimeDeviceUpdates from './pages/GapNoWebsocketRealTimeDeviceUpdates';
 import CustomViewsPage from './pages/CustomViewsPage';
+import MedicationReminderEscalation from './pages/MedicationReminderEscalation';
+
+import CodexCustomVizFeature from './pages/CodexCustomVizFeature';
+import CodexOperationsFeature from './pages/CodexOperationsFeature';
+
+import TimelineView from './pages/TimelineView';
 
 const API = 'http://localhost:3001/api';
 
@@ -48,6 +54,10 @@ function AppLayout() {
         <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} onLogout={handleLogout} />
         <main className="main-content">
           <Routes>
+        <Route path="/insights/timeline" element={<ProtectedRoute><TimelineView /></ProtectedRoute>} />
+        <Route path="/codex/custom-viz" element={<ProtectedRoute><CodexCustomVizFeature /></ProtectedRoute>} />
+        <Route path="/codex/operations" element={<ProtectedRoute><CodexOperationsFeature /></ProtectedRoute>} />
+
             <Route path="/" element={<Dashboard setCurrentPage={setCurrentPage} />} />
 
             {/* Smart Home */}
@@ -383,6 +393,7 @@ function AppLayout() {
           <Route path="/gap-no-webhook-surface" element={<GapNoWebhookSurface />} />
           <Route path="/gap-no-websocket-real-time-device-updates" element={<GapNoWebsocketRealTimeDeviceUpdates />} />
           <Route path="/custom-views" element={<CustomViewsPage />} />
+          <Route path="/medication-reminder-escalation" element={<MedicationReminderEscalation />} />
 </Routes>
         </main>
       </div>
