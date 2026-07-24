@@ -31,8 +31,25 @@ case "${1:-start}" in
     export CLIENT_URL="${CLIENT_URL:-http://${FRONTEND_HOST:-127.0.0.1}:${FRONTEND_PORT:?FRONTEND_PORT or CLIENT_URL is required}}"
     export JWT_ISSUER="${JWT_ISSUER:-home-companion}"
     export JWT_AUDIENCE="${JWT_AUDIENCE:-home-companion-api}"
-    cd "$project_dir/backend"
-    exec npm start
+    for assigned_port in "$BACKEND_PORT" "$FRONTEND_PORT"; do
+      if lsof -nP -iTCP:"$assigned_port" -sTCP:LISTEN >/dev/null 2>&1; then
+        echo "Assigned port $assigned_port is already occupied" >&2
+        exit 1
+      fi
+    done
+    (cd "$project_dir/backend" && exec node scripts/runtimeMigrate.js)
+    (cd "$project_dir/backend" && exec node scripts/createAdmin.js)
+    (cd "$project_dir/backend" && exec node server.js) &
+    backend_pid=$!
+    (cd "$project_dir/frontend" && exec env VITE_API_URL="http://127.0.0.1:$BACKEND_PORT/api" ./node_modules/.bin/vite --host "${FRONTEND_HOST:-127.0.0.1}" --port "$FRONTEND_PORT") &
+    frontend_pid=$!
+    cleanup() {
+      trap - EXIT INT TERM
+      kill "$backend_pid" "$frontend_pid" 2>/dev/null || true
+      wait "$backend_pid" "$frontend_pid" 2>/dev/null || true
+    }
+    trap cleanup EXIT INT TERM
+    wait "$backend_pid" "$frontend_pid"
     ;;
   *) echo "Usage: ./start.sh [check|migrate|start]" >&2; exit 64 ;;
 esac
