@@ -18,7 +18,8 @@ export default function Login() {
     setError('');
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3001/api/auth/login', {
+      const apiBase = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
+      const res = await fetch(`${apiBase}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -56,7 +57,7 @@ export default function Login() {
           </button>
         </form>
         <button className="btn-autofill" onClick={handleAutoFill}>
-          Click to Auto-fill Demo Credentials
+          Auto Fill Demo Credentials
         </button>
       </div>
     </div>
